@@ -1,0 +1,25 @@
+import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { PageResponse } from '../interfaces/pageResponse';
+import { Book } from '../interfaces/book';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class BookService {
+  private http = inject(HttpClient);
+  private apiUrl = 'http://localhost:8080/books';
+
+  public getAllBooks(
+    page: number = 0,
+    size: number = 10,
+    sortBy: string = 'title',
+  ): Observable<PageResponse<Book>> {
+    const httpParams: HttpParams = new HttpParams()
+      .append('page', page)
+      .append('size', size)
+      .append('sortBy', sortBy);
+    return this.http.get<PageResponse<Book>>(this.apiUrl, { params: httpParams });
+  }
+}

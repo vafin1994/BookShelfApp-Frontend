@@ -1,0 +1,12 @@
+<div>
+  <h1>Book Library</h1>
+
+  @for (book of booksList(); track book.id) {
+    <div>
+      <h3>{{ book.title }}</h3>
+      <p>{{ book.author }}</p>
+    </div>
+  } @empty {
+    <p>No books found</p>
+  }
+</div>
