@@ -9,5 +9,5 @@ import { BookList } from './book-list/book-list';
   styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('BookShelfApp-Frontend');
+
 }

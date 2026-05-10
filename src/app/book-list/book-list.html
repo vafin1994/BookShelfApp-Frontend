@@ -5,7 +5,7 @@
       <mat-spinner />
     </div>
   } @else if (error()) {
-    <p>{{ error() }}</p>
+    <p class="error">{{ error() }}</p>
   } @else {
     <app-book-table [booksList]="booksList()"></app-book-table>
     <mat-paginator
