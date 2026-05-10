@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import { Component, input } from '@angular/core';
 import { MatCell } from '@angular/material/table';
 import { Book } from '../../interfaces/book';
 import { MatTableModule } from '@angular/material/table';

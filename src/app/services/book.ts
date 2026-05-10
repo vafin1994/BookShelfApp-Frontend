@@ -11,11 +11,7 @@ export class BookService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:8080/books';
 
-  public getAllBooks(
-    page: number = 0,
-    size: number = 10,
-    sortBy: string = 'title',
-  ): Observable<PageResponse<Book>> {
+  public getAllBooks(page = 0, size = 10, sortBy = 'title'): Observable<PageResponse<Book>> {
     const httpParams: HttpParams = new HttpParams()
       .append('page', page)
       .append('size', size)

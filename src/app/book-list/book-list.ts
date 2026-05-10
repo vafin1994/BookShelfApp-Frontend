@@ -6,11 +6,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BookTable } from './book-table/book-table';
-import {MatPaginator, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-book-list',
-  imports: [MatProgressSpinnerModule, BookTable, MatPaginator, MatPaginatorModule ],
+  imports: [MatProgressSpinnerModule, BookTable, MatPaginator, MatPaginatorModule],
   templateUrl: './book-list.html',
   styleUrl: './book-list.css',
 })
@@ -31,7 +31,7 @@ export class BookList implements OnInit {
     this.getAllBooks();
   }
 
-  getAllBooks(page: number = 0, size: number = 5, sortBy: string = 'title') {
+  getAllBooks(page = 0, size = 5, sortBy = 'title') {
     this.isLoading.set(true);
     this.error.set(null);
     this.bookService
@@ -45,7 +45,7 @@ export class BookList implements OnInit {
           this.booksList.set(response.content);
           this.totalElements.set(response.totalElements);
         },
-        error: (error) => {
+        error: () => {
           this.error.set('Failed to get books');
         },
       });
