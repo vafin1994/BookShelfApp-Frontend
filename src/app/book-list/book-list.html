@@ -1,5 +1,6 @@
 <div class="container">
   <h1>Book Library</h1>
+  <button (click)="openBookForm()" mat-button>Create a new book</button>
   @if (isLoading()) {
     <div class="spinner-container">
       <mat-spinner />
