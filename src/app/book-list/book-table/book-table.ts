@@ -12,11 +12,16 @@ import {MatButton} from '@angular/material/button';
 })
 export class BookTable {
   editBook = output<Required<Book>>();
+  deleteBook = output<Required<Book>>();
   booksList = input<Book[]>([]);
 
   displayedColumns = ['title', 'author', 'genre', 'publishingYear', 'action'];
 
   onEditBook(book: Required<Book>) {
     this.editBook.emit(book);
+  }
+
+  onDeleteBook(book: Required<Book>) {
+    this.deleteBook.emit(book);
   }
 }

@@ -8,7 +8,7 @@
   } @else if (error()) {
     <p class="error">{{ error() }}</p>
   } @else {
-    <app-book-table [booksList]="booksList()" (editBook)="openBookForm($event)"></app-book-table>
+    <app-book-table [booksList]="booksList()" (editBook)="openBookForm($event)" (deleteBook)="openDeleteConfirmDialog($event)"></app-book-table>
     <mat-paginator
       [length]="totalElements()"
       [pageSize]="pageSize()"

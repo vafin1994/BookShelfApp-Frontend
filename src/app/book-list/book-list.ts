@@ -10,6 +10,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatButton } from '@angular/material/button';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { BookForm } from './book-form/book-form';
+import { ConfirmDialog } from '../shared/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-book-list',
@@ -91,6 +92,28 @@ export class BookList implements OnInit {
           });
         } else {
           return;
+        }
+      });
+  }
+
+  public openDeleteConfirmDialog(book: Required<Book>): void {
+    const dialogRef: MatDialogRef<ConfirmDialog, boolean> = this.dialog.open(ConfirmDialog, {
+      width: '200px',
+      data: 'Are you sure you want to delete ' + book.title + ' book',
+    });
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((result: boolean | undefined) => {
+        if (result) {
+          this.bookService.deleteBook(book.id).subscribe({
+            next: () => {
+              this.getAllBooks(this.pageIndex(), this.pageSize());
+            },
+            error: (err) => {
+              console.error('Error creating book', err);
+            },
+          });
         }
       });
   }
