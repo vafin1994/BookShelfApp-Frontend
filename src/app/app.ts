@@ -1,13 +1,10 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
 import { BookList } from './book-list/book-list';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, BookList],
+  imports: [BookList],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App {
-
-}
+export class App {}
