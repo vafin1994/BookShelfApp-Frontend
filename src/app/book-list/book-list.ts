@@ -11,6 +11,7 @@ import { MatButton } from '@angular/material/button';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { BookForm } from './book-form/book-form';
 import { ConfirmDialog } from '../shared/confirm-dialog/confirm-dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-book-list',
@@ -31,6 +32,7 @@ export class BookList implements OnInit {
   private bookService = inject(BookService);
   private destroyRef = inject(DestroyRef);
   private dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
 
   ngOnInit() {
     this.getAllBooks();
@@ -78,7 +80,7 @@ export class BookList implements OnInit {
               this.getAllBooks(this.pageIndex(), this.pageSize());
             },
             error: (err) => {
-              console.error('Error updating book', err);
+              this.snackBar.open('Failed to update book', 'Close', { duration: 3000 });
             },
           });
         } else if (result) {
@@ -87,7 +89,7 @@ export class BookList implements OnInit {
               this.getAllBooks(this.pageIndex(), this.pageSize());
             },
             error: (err) => {
-              console.error('Error creating book', err);
+              this.snackBar.open('Failed to create book', 'Close', { duration: 3000 });
             },
           });
         } else {
@@ -111,7 +113,7 @@ export class BookList implements OnInit {
               this.getAllBooks(this.pageIndex(), this.pageSize());
             },
             error: (err) => {
-              console.error('Error creating book', err);
+              this.snackBar.open('Failed to delete book', 'Close', { duration: 3000 });
             },
           });
         }
