@@ -3,12 +3,12 @@
   <button (click)="openBookForm()" mat-button>Create a new book</button>
   @if (isLoading()) {
     <div class="spinner-container">
-      <mat-spinner />
+      <mat-spinner/>
     </div>
   } @else if (error()) {
     <p class="error">{{ error() }}</p>
   } @else {
-    <app-book-table [booksList]="booksList()"></app-book-table>
+    <app-book-table [booksList]="booksList()" (editBook)="openBookForm($event)"></app-book-table>
     <mat-paginator
       [length]="totalElements()"
       [pageSize]="pageSize()"

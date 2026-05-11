@@ -71,9 +71,24 @@ export class BookList implements OnInit {
       .pipe(take(1))
       .subscribe((result: Book | undefined) => {
         if (result && result.id) {
-          console.log('Update book id:', result.id);
+          const updatedBook: Required<Book> = result as Required<Book>;
+          this.bookService.updateBook(updatedBook).subscribe({
+            next: (response: Book | null) => {
+              this.getAllBooks(this.pageIndex(), this.pageSize());
+            },
+            error: (err) => {
+              console.error('Error updating book', err);
+            },
+          });
         } else if (result) {
-          console.log('Create a new book');
+          this.bookService.createBook(result).subscribe({
+            next: (response: Book | null) => {
+              this.getAllBooks(this.pageIndex(), this.pageSize());
+            },
+            error: (err) => {
+              console.error('Error creating book', err);
+            },
+          });
         } else {
           return;
         }

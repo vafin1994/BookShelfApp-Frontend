@@ -5,7 +5,7 @@ import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/materia
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatCard, MatCardActions, MatCardContent, MatCardTitle } from '@angular/material/card';
+import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 
 @Component({
   selector: 'app-book-form',
@@ -19,6 +19,7 @@ import { MatCard, MatCardActions, MatCardContent, MatCardTitle } from '@angular/
     MatCardTitle,
     MatCardContent,
     MatCardActions,
+    MatCardHeader,
   ],
   templateUrl: './book-form.html',
   styleUrl: './book-form.css',

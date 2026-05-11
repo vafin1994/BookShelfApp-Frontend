@@ -18,4 +18,12 @@ export class BookService {
       .append('sortBy', sortBy);
     return this.http.get<PageResponse<Book>>(this.apiUrl, { params: httpParams });
   }
+
+  public createBook(book: Book): Observable<Book> {
+    return this.http.post<Book>(this.apiUrl, book);
+  }
+
+  public updateBook(book: Required<Book>): Observable<Book> {
+    return this.http.put<Book>(`${this.apiUrl}/${book.id}`, book);
+  }
 }
