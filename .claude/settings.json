@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "agent",
+            "if": "Bash(git commit*)",
+            "prompt": "A git commit was just made in this Angular 21 project. Run 'git show HEAD --stat' and 'git show HEAD' to see what changed, then review the committed code.\n\nFocus your review on these areas, skipping any that aren't relevant to the diff:\n\n1. **Angular architecture** — proper use of standalone components, signals vs RxJS, smart/dumb component separation, `inject()` over constructor injection, `input()`/`output()` over decorators, `takeUntilDestroyed` for subscription cleanup.\n\n2. **Clean code** — naming clarity, single responsibility, avoiding unnecessary complexity, keeping components and methods focused.\n\n3. **Testability** — whether the code is easy to test, use of `HttpTestingController` pattern, avoiding tight coupling.\n\nFor each issue found: state what it is, explain WHY it matters (the principle behind it), and show a concrete fix. If the code looks good, say so and explain what it does well — positive reinforcement helps learning too. Keep the review concise and educational.",
+            "statusMessage": "Reviewing committed code...",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}
