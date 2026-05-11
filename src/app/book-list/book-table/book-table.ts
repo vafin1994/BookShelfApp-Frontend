@@ -15,7 +15,7 @@ export class BookTable {
   deleteBook = output<Required<Book>>();
   booksList = input<Book[]>([]);
 
-  displayedColumns = ['title', 'author', 'genre', 'publishingYear', 'action'];
+  displayedColumns = ['title', 'author', 'genre', 'publishingYear', 'language', 'action'];
 
   onEditBook(book: Required<Book>) {
     this.editBook.emit(book);

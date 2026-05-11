@@ -22,12 +22,18 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>ISBN</mat-label>
-        <input matInput formControlName="isbn"/>
+        <input maxlength="13" matInput formControlName="isbn"/>
+        @if (form.get('isbn')?.invalid && form.get('isbn')?.touched) {
+          <mat-error>ISBN should be either 10 or 13 digits long</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Publishing Year</mat-label>
-        <input matInput type="number" formControlName="publishingYear"/>
+        <input min="1450" max="2100" matInput type="number" formControlName="publishingYear"/>
+        @if (form.get('publishingYear')?.invalid && form.get('publishingYear')?.touched) {
+          <mat-error>Publishing Year should be between 1450 year and 2100 year</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -37,7 +43,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Language</mat-label>
-        <input matInput formControlName="language"/>
+        <input matInput maxlength="50" formControlName="language"/>
       </mat-form-field>
     </form>
   </mat-card-content>

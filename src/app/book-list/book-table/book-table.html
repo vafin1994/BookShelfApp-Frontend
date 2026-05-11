@@ -19,6 +19,11 @@
     <td mat-cell *matCellDef="let book">{{ book.publishingYear }}</td>
   </ng-container>
 
+  <ng-container matColumnDef="language">
+    <th mat-header-cell *matHeaderCellDef>Language</th>
+    <td mat-cell *matCellDef="let book">{{ book.language }}</td>
+  </ng-container>
+
   <ng-container matColumnDef="action">
     <th mat-header-cell *matHeaderCellDef>Action</th>
     <td mat-cell *matCellDef="let book">

@@ -5,7 +5,13 @@ import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/materia
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardTitle,
+} from '@angular/material/card';
 
 @Component({
   selector: 'app-book-form',
@@ -39,10 +45,13 @@ export class BookForm implements OnInit {
     this.form = this.fb.group({
       title: [this.data?.title ?? '', Validators.required],
       author: [this.data?.author ?? '', Validators.required],
-      isbn: [this.data?.isbn ?? ''],
-      publishingYear: [this.data?.publishingYear ?? null],
+      isbn: [this.data?.isbn ?? '', Validators.pattern(/^(\d{10}|\d{13})$/)],
+      publishingYear: [
+        this.data?.publishingYear ?? null,
+        [Validators.min(1450), Validators.max(2100)],
+      ],
       genre: [this.data?.genre ?? ''],
-      language: [this.data?.language ?? ''],
+      language: [this.data?.language ?? '', Validators.maxLength(50)],
     });
   }
 
