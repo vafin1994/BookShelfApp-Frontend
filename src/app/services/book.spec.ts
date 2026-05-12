@@ -6,6 +6,16 @@ import { provideHttpClient } from '@angular/common/http';
 import { PageResponse } from '../interfaces/pageResponse';
 import { Book } from '../interfaces/book';
 
+const book: Required<Book> = {
+  id: 1,
+  title: 'Clean Code',
+  author: 'Robert C Martin',
+  isbn: '9780132508484',
+  publishingYear: 2008,
+  genre: 'Programming',
+  language: 'English',
+};
+
 describe('BookService', () => {
   let service: BookService;
   let httpMock: HttpTestingController;
@@ -73,4 +83,27 @@ describe('BookService', () => {
     expect(req.request.method).toBe('GET');
     req.flush({});
   });
+
+  it('should call createBook', () => {
+    service.createBook(book).subscribe();
+    const req = httpMock.expectOne('http://localhost:8080/books');
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual(book);
+    req.flush({});
+  })
+
+  it('should call updateBook', () => {
+    service.updateBook(book).subscribe();
+    const req = httpMock.expectOne('http://localhost:8080/books/' + book.id);
+    expect(req.request.method).toBe('PUT');
+    expect(req.request.body).toEqual(book);
+    req.flush({});
+  })
+
+  it('should call deleteBook', () => {
+    service.deleteBook(1).subscribe();
+    const req = httpMock.expectOne('http://localhost:8080/books/' + 1);
+    expect(req.request.method).toBe('DELETE');
+    req.flush({});
+  })
 });

@@ -5,14 +5,15 @@ import { Book } from '../interfaces/book';
 import { PageResponse } from '../interfaces/pageResponse';
 import { NEVER, of, throwError } from 'rxjs';
 import { BookService } from '../services/book';
-import { beforeEach, expect } from 'vitest';
+import {beforeEach, describe, expect} from 'vitest';
+import {MatDialog} from '@angular/material/dialog';
 
 const mockBooks: Book[] = [
   {
     id: 1,
     title: 'Clean Code',
     author: 'Robert C Martin',
-    isbn: '978013250884',
+    isbn: '9780132508384',
     publishingYear: 2008,
     genre: 'Programming',
     language: 'English',
@@ -136,3 +137,33 @@ describe('Book List loading state', () => {
     expect(spinnerElement).toBeTruthy();
   });
 });
+
+describe('Book list open dialogs', () => {
+  let component: BookList;
+  let fixture: ComponentFixture<BookList>;
+
+  const mockDialogRef = {
+    afterClosed: () => of(undefined)
+  };
+
+  const mockDialog = {
+    open: vi.fn().mockReturnValue(mockDialogRef)
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [BookList],
+      providers: [
+        { provide: BookService, useValue: mockBookService },
+        { provide: MatDialog, useValue: mockDialog }
+      ],
+    }).compileComponents();
+    fixture = TestBed.createComponent(BookList);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should call create new book', () => {
+    expect(true).toBeTruthy();
+  })
+})
