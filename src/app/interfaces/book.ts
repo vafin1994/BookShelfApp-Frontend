@@ -12,7 +12,7 @@ export interface Book extends BookBase {
   authorName: string;
 }
 
-export interface BookRequest extends BookBase {}
+export type BookRequest = BookBase;
 
 export interface BookFormResult extends BookRequest {
   id?: number;

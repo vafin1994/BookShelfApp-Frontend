@@ -83,19 +83,19 @@ export class BookList implements OnInit {
             language: result.language,
           };
           this.bookService.updateBook(result.id, bookRequest).subscribe({
-            next: (_response: Book | null) => {
+            next: () => {
               this.getAllBooks(this.pageIndex(), this.pageSize());
             },
-            error: (_err) => {
+            error: () => {
               this.snackBar.open('Failed to update book', 'Close', { duration: 3000 });
             },
           });
         } else if (result) {
           this.bookService.createBook(result).subscribe({
-            next: (_response: Book | null) => {
+            next: () => {
               this.getAllBooks(this.pageIndex(), this.pageSize());
             },
-            error: (_err) => {
+            error: () => {
               this.snackBar.open('Failed to create book', 'Close', { duration: 3000 });
             },
           });
@@ -119,7 +119,7 @@ export class BookList implements OnInit {
             next: () => {
               this.getAllBooks(this.pageIndex(), this.pageSize());
             },
-            error: (_err) => {
+            error: () => {
               this.snackBar.open('Failed to delete book', 'Close', { duration: 3000 });
             },
           });

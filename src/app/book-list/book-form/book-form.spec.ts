@@ -60,9 +60,9 @@ describe('create book', () => {
   });
 
   it('submit button should be Add Book', () => {
-    const buttons = fixture.nativeElement.querySelectorAll('button');
+    const buttons: HTMLButtonElement[] = fixture.nativeElement.querySelectorAll('button');
     const submitButton = Array.from(buttons).find(
-      (btn: any) => btn.textContent.trim() === 'Add Book',
+      (btn: HTMLButtonElement) => btn.textContent.trim() === 'Add Book',
     );
     expect(submitButton).toBeTruthy();
   });
@@ -154,9 +154,9 @@ describe('edit book', () => {
   });
 
   it('submit button should be Save Book', () => {
-    const buttons = fixture.nativeElement.querySelectorAll('button');
+    const buttons: HTMLButtonElement[] = fixture.nativeElement.querySelectorAll('button');
     const submitButton = Array.from(buttons).find(
-      (btn: any) => btn.textContent.trim() === 'Save Book',
+      (btn: HTMLButtonElement) => btn?.textContent.trim() === 'Save Book',
     );
     expect(submitButton).toBeTruthy();
   });

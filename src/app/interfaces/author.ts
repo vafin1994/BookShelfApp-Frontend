@@ -7,4 +7,4 @@ export interface Author extends AuthorBase {
   id?: number;
 }
 
-export interface AuthorRequest extends AuthorBase {}
+export type AuthorRequest = AuthorBase;

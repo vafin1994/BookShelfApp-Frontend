@@ -59,14 +59,14 @@ describe('AuthorService', () => {
   });
 
   it('should call create author', () => {
-    service.createAuthor(mockResponse[0]).subscribe((_res: Author) => {});
+    service.createAuthor(mockResponse[0]).subscribe();
     const req = httpMock.expectOne(`${url}`)
     expect(req.request.method).toBe('POST');
     req.flush(mockResponse[0]);
   });
 
   it('should call update author', () => {
-    service.updateAuthor(1, mockResponse[0]).subscribe((_res: Author) => {});
+    service.updateAuthor(1, mockResponse[0]).subscribe();
     const req = httpMock.expectOne(`${url}/1`)
     expect(req.request.method).toBe('PUT');
     req.flush(mockResponse[0]);
