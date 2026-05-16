@@ -12,9 +12,9 @@
         <mat-label>Country</mat-label>
         <input matInput type="text">
       </mat-form-field>
-      <button mat-button type="button" (click)="addAuthor()" >
+      <button mat-button type="button" (click)="addAuthor()">
         <mat-icon>add</mat-icon>
-          Add Author
+        Add Author
       </button>
     </form>
     @for (author of authors(); track author.id) {
@@ -27,13 +27,17 @@
           <mat-label>Country</mat-label>
           <input [disabled]="editedAuthor() !== author.id" matInput type="text" [value]="author.country">
         </mat-form-field>
-        <button type="button" (click)="editAuthor(author.id)" mat-icon-button>
-          @if (editedAuthor() === author.id){
+
+        @if (editedAuthor() === author.id) {
+          <button (click)="saveAuthor()" type="button" mat-icon-button>
             <mat-icon>save</mat-icon>
-          } @else {
+          </button>
+        } @else {
+          <button (click)="editAuthor(author.id)" type="button" mat-icon-button>
             <mat-icon>edit</mat-icon>
-          }
-        </button>
+          </button>
+        }
+
       </form>
       <div>{{ author.name }}: {{ author.country }}</div>
     }

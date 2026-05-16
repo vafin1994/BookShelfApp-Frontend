@@ -44,4 +44,8 @@ export class AuthorList implements OnInit {
       this.editedAuthor.set(id);
     }
   }
+
+  public saveAuthor() {
+    this.editedAuthor.set(null);
+  }
 }
