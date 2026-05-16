@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BookList } from './book-list';
-import { Book } from '../interfaces/book';
+import {Book, BookRequest} from '../interfaces/book';
 import { PageResponse } from '../interfaces/pageResponse';
 import { NEVER, of, throwError } from 'rxjs';
 import { BookService } from '../services/book';
@@ -14,12 +14,22 @@ import { ConfirmDialog } from '../shared/confirm-dialog/confirm-dialog';
 const mockBook: Required<Book> = {
   id: 1,
   title: 'Clean Code',
-  author: 'Robert C Martin',
+  authorName: 'Robert C Martin',
+  authorId: 1,
   isbn: '9780132508384',
   publishingYear: 2008,
   genre: 'Programming',
   language: 'English',
 };
+
+const bookRequest: BookRequest = {
+  title: 'Clean Code',
+  authorId: 1,
+  isbn: '9780132508384',
+  publishingYear: 2008,
+  genre: 'Programming',
+  language: 'English',
+}
 
 const mockBooks: Book[] = [mockBook];
 
@@ -191,7 +201,15 @@ describe('Book list — openBookForm', () => {
   });
 
   it('should call createBook when dialog returns a book without id', () => {
-    const newBook: Book = { title: 'New Book', author: 'Author', isbn: '', genre: '', publishingYear: 2024, language: 'English' };
+    const newBook: Book = {
+      title: 'New Book',
+      authorName: 'Author',
+      authorId: 1,
+      isbn: '',
+      genre: '',
+      publishingYear: 2024,
+      language: 'English',
+    };
     mockDialogRef.afterClosed.mockReturnValue(of(newBook));
     component.openBookForm();
     expect(dialogBookService.createBook).toHaveBeenCalledWith(newBook);
@@ -200,7 +218,7 @@ describe('Book list — openBookForm', () => {
   it('should call updateBook when dialog returns a book with id', () => {
     mockDialogRef.afterClosed.mockReturnValue(of(mockBook));
     component.openBookForm(mockBook);
-    expect(dialogBookService.updateBook).toHaveBeenCalledWith(mockBook);
+    expect(dialogBookService.updateBook).toHaveBeenCalledWith(1, bookRequest);
   });
 
   it('should not call createBook or updateBook when dialog is cancelled', () => {
@@ -211,7 +229,15 @@ describe('Book list — openBookForm', () => {
   });
 
   it('should refresh book list after successful create', () => {
-    const newBook: Book = { title: 'New Book', author: 'Author', isbn: '', genre: '', publishingYear: 2024, language: 'English' };
+    const newBook: Book = {
+      title: 'New Book',
+      authorName: 'Author',
+      authorId: 1,
+      isbn: '',
+      genre: '',
+      publishingYear: 2024,
+      language: 'English',
+    };
     mockDialogRef.afterClosed.mockReturnValue(of(newBook));
     component.openBookForm();
     // once on init, once after successful create
@@ -225,18 +251,30 @@ describe('Book list — openBookForm', () => {
   });
 
   it('should show snackbar when createBook fails', () => {
-    const newBook: Book = { title: 'New Book', author: 'Author', isbn: '', genre: '', publishingYear: 2024, language: 'English' };
+    const newBook: Book = {
+      title: 'New Book',
+      authorName: 'Author',
+      authorId: 1,
+      isbn: '',
+      genre: '',
+      publishingYear: 2024,
+      language: 'English',
+    };
     mockDialogRef.afterClosed.mockReturnValue(of(newBook));
     dialogBookService.createBook.mockReturnValue(throwError(() => new Error('API Error')));
     component.openBookForm();
-    expect(mockSnackBar.open).toHaveBeenCalledWith('Failed to create book', 'Close', { duration: 3000 });
+    expect(mockSnackBar.open).toHaveBeenCalledWith('Failed to create book', 'Close', {
+      duration: 3000,
+    });
   });
 
   it('should show snackbar when updateBook fails', () => {
     mockDialogRef.afterClosed.mockReturnValue(of(mockBook));
     dialogBookService.updateBook.mockReturnValue(throwError(() => new Error('API Error')));
     component.openBookForm(mockBook);
-    expect(mockSnackBar.open).toHaveBeenCalledWith('Failed to update book', 'Close', { duration: 3000 });
+    expect(mockSnackBar.open).toHaveBeenCalledWith('Failed to update book', 'Close', {
+      duration: 3000,
+    });
   });
 });
 
@@ -308,6 +346,8 @@ describe('Book list — openDeleteConfirmDialog', () => {
     mockDialogRef.afterClosed.mockReturnValue(of(true));
     dialogBookService.deleteBook.mockReturnValue(throwError(() => new Error('API Error')));
     component.openDeleteConfirmDialog(mockBook);
-    expect(mockSnackBar.open).toHaveBeenCalledWith('Failed to delete book', 'Close', { duration: 3000 });
+    expect(mockSnackBar.open).toHaveBeenCalledWith('Failed to delete book', 'Close', {
+      duration: 3000,
+    });
   });
 });

@@ -7,7 +7,8 @@ import { expect } from 'vitest';
 const book: Required<Book> = {
   id: 1,
   title: 'Clean Code',
-  author: 'Robert C Martin',
+  authorName: 'Robert C Martin',
+  authorId: 1,
   isbn: '9780132508284',
   publishingYear: 2008,
   genre: 'Programming',
