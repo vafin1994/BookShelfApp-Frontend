@@ -1,0 +1,45 @@
+<mat-card>
+  <mat-card-header>
+    <h1>Authors</h1>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="row">
+      <mat-form-field>
+        <mat-label>Name:</mat-label>
+        <input matInput type="text">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Country</mat-label>
+        <input matInput type="text">
+      </mat-form-field>
+      <button mat-button type="button" (click)="addAuthor()" >
+        <mat-icon>add</mat-icon>
+          Add Author
+      </button>
+    </form>
+    @for (author of authors(); track author.id) {
+      <form class="row">
+        <mat-form-field>
+          <mat-label>Name:</mat-label>
+          <input [disabled]="editedAuthor() !== author.id" matInput type="text" [value]="author.name">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Country</mat-label>
+          <input [disabled]="editedAuthor() !== author.id" matInput type="text" [value]="author.country">
+        </mat-form-field>
+        <button type="button" (click)="editAuthor(author.id)" mat-icon-button>
+          @if (editedAuthor() === author.id){
+            <mat-icon>save</mat-icon>
+          } @else {
+            <mat-icon>edit</mat-icon>
+          }
+        </button>
+      </form>
+      <div>{{ author.name }}: {{ author.country }}</div>
+    }
+  </mat-card-content>
+
+</mat-card>
+
+
+

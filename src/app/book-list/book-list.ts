@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { BookService } from '../services/book';
 import { PageResponse } from '../interfaces/pageResponse';
-import {Book, BookFormResult, BookRequest} from '../interfaces/book';
+import { Book, BookFormResult, BookRequest } from '../interfaces/book';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize, take } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -12,6 +12,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { BookForm } from './book-form/book-form';
 import { ConfirmDialog } from '../shared/confirm-dialog/confirm-dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthorList } from '../author-list/author-list';
 
 @Component({
   selector: 'app-book-list',
@@ -125,5 +126,12 @@ export class BookList implements OnInit {
           });
         }
       });
+  }
+
+  public openAuthorManagementDialog(): void {
+    const dialogRef: MatDialogRef<AuthorList, void> = this.dialog.open(AuthorList, {
+      width: '800px',
+    });
+    dialogRef.afterClosed().pipe(take(1)).subscribe({});
   }
 }

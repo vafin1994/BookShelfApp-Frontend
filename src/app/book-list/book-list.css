@@ -4,6 +4,17 @@
   margin: 0 auto;
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main-actions {
+  display: flex;
+  gap: 1rem;
+}
+
 .spinner-container {
   display: flex;
   justify-content: center;
