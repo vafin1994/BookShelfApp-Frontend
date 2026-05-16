@@ -1,9 +1,19 @@
-export interface Book {
-  id?: number;
+export interface BookBase {
   title: string;
-  author: string;
+  authorId: number;
   isbn: string;
-  genre: string;
   publishingYear: number;
+  genre: string;
   language: string;
+}
+
+export interface Book extends BookBase {
+  id?: number;
+  authorName: string;
+}
+
+export interface BookRequest extends BookBase {}
+
+export interface BookFormResult extends BookRequest {
+  id?: number;
 }

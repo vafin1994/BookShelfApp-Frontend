@@ -15,8 +15,14 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Author</mat-label>
-        <input matInput formControlName="author"/>
-        @if (form.get('author')?.hasError('required') && form.get('author')?.touched) {
+        <mat-select formControlName="authorId" placeholder="Select author">
+          @for (author of listOfAuthors(); track author.id) {
+            <mat-option [value]="author.id">
+              {{ author.name }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (form.get('authorId')?.hasError('required') && form.get('authorId')?.touched) {
           <mat-error>Author is required</mat-error>
         }
       </mat-form-field>

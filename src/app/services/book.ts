@@ -1,15 +1,16 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PageResponse } from '../interfaces/pageResponse';
-import { Book } from '../interfaces/book';
+import {Book, BookRequest} from '../interfaces/book';
 import { Observable } from 'rxjs';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/books';
+  private apiUrl = `${environment.apiUrl}/books`;
 
   public getAllBooks(page = 0, size = 10, sortBy = 'title'): Observable<PageResponse<Book>> {
     const httpParams: HttpParams = new HttpParams()
@@ -19,12 +20,12 @@ export class BookService {
     return this.http.get<PageResponse<Book>>(this.apiUrl, { params: httpParams });
   }
 
-  public createBook(book: Book): Observable<Book> {
+  public createBook(book: BookRequest): Observable<Book> {
     return this.http.post<Book>(this.apiUrl, book);
   }
 
-  public updateBook(book: Required<Book>): Observable<Book> {
-    return this.http.put<Book>(`${this.apiUrl}/${book.id}`, book);
+  public updateBook(id: number, book: BookRequest): Observable<Book> {
+    return this.http.put<Book>(`${this.apiUrl}/${id}`, book);
   }
 
   public deleteBook(id: number): Observable<void> {

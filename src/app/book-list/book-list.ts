@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { BookService } from '../services/book';
 import { PageResponse } from '../interfaces/pageResponse';
-import { Book } from '../interfaces/book';
+import {Book, BookFormResult, BookRequest} from '../interfaces/book';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize, take } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -65,17 +65,24 @@ export class BookList implements OnInit {
   }
 
   public openBookForm(book: Book | null = null) {
-    const dialogRef: MatDialogRef<BookForm, Book> = this.dialog.open(BookForm, {
+    const dialogRef: MatDialogRef<BookForm, BookFormResult> = this.dialog.open(BookForm, {
       width: '500px',
       data: book,
     });
     dialogRef
       .afterClosed()
       .pipe(take(1))
-      .subscribe((result: Book | undefined) => {
+      .subscribe((result: BookFormResult | undefined) => {
         if (result && result.id) {
-          const updatedBook: Required<Book> = result as Required<Book>;
-          this.bookService.updateBook(updatedBook).subscribe({
+          const bookRequest: BookRequest = {
+            title: result.title,
+            authorId: result.authorId,
+            isbn: result.isbn,
+            publishingYear: result.publishingYear,
+            genre: result.genre,
+            language: result.language,
+          };
+          this.bookService.updateBook(result.id, bookRequest).subscribe({
             next: (response: Book | null) => {
               this.getAllBooks(this.pageIndex(), this.pageSize());
             },

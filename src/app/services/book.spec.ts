@@ -4,12 +4,11 @@ import { afterEach, beforeEach, expect } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { PageResponse } from '../interfaces/pageResponse';
-import { Book } from '../interfaces/book';
+import { Book, BookRequest } from '../interfaces/book';
 
-const book: Required<Book> = {
-  id: 1,
+const book: BookRequest = {
   title: 'Clean Code',
-  author: 'Robert C Martin',
+  authorId: 1,
   isbn: '9780132508484',
   publishingYear: 2008,
   genre: 'Programming',
@@ -50,7 +49,8 @@ describe('BookService', () => {
         {
           id: 1,
           title: 'Clean Code',
-          author: 'Robert C. Martin',
+          authorId: 1,
+          authorName: 'Robert C. Martin',
           isbn: '9780132350884',
           publishingYear: 2008,
           genre: 'Programming',
@@ -90,20 +90,20 @@ describe('BookService', () => {
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(book);
     req.flush({});
-  })
+  });
 
   it('should call updateBook', () => {
-    service.updateBook(book).subscribe();
-    const req = httpMock.expectOne('http://localhost:8080/books/' + book.id);
+    service.updateBook(1, book).subscribe();
+    const req = httpMock.expectOne('http://localhost:8080/books/' + 1);
     expect(req.request.method).toBe('PUT');
     expect(req.request.body).toEqual(book);
     req.flush({});
-  })
+  });
 
   it('should call deleteBook', () => {
     service.deleteBook(1).subscribe();
     const req = httpMock.expectOne('http://localhost:8080/books/' + 1);
     expect(req.request.method).toBe('DELETE');
     req.flush({});
-  })
+  });
 });
