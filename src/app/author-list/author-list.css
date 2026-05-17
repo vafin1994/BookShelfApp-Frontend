@@ -1,4 +1,15 @@
-.row {
+.form-row {
   display: flex;
   gap: 0.5rem;
+  align-items: baseline;
+}
+
+.form-fields-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.form-buttons-wrapper {
+  display: flex;
+  justify-content: end;
 }

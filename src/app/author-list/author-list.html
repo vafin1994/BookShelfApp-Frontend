@@ -3,43 +3,49 @@
     <h1>Authors</h1>
   </mat-card-header>
   <mat-card-content>
-    <form class="row">
-      <mat-form-field>
-        <mat-label>Name:</mat-label>
-        <input matInput type="text">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Country</mat-label>
-        <input matInput type="text">
-      </mat-form-field>
-      <button mat-button type="button" (click)="addAuthor()">
-        <mat-icon>add</mat-icon>
-        Add Author
-      </button>
-    </form>
-    @for (author of authors(); track author.id) {
-      <form class="row">
+    <form class="form-row" [formGroup]="authorForm">
+      <div class="form-fields-wrapper">
         <mat-form-field>
           <mat-label>Name:</mat-label>
-          <input [disabled]="editedAuthor() !== author.id" matInput type="text" [value]="author.name">
+          <input formControlName="name" matInput type="text">
         </mat-form-field>
         <mat-form-field>
           <mat-label>Country</mat-label>
-          <input [disabled]="editedAuthor() !== author.id" matInput type="text" [value]="author.country">
+          <input formControlName="country" matInput type="text">
         </mat-form-field>
+      </div>
+      <div class="form-buttons-wrapper">
+        <button [disabled]="authorForm.invalid" mat-button type="button" (click)="addAuthor()">
+          <mat-icon>add</mat-icon>
+          Add Author
+        </button>
+      </div>
 
-        @if (editedAuthor() === author.id) {
-          <button (click)="saveAuthor()" type="button" mat-icon-button>
-            <mat-icon>save</mat-icon>
-          </button>
-        } @else {
-          <button (click)="editAuthor(author.id)" type="button" mat-icon-button>
-            <mat-icon>edit</mat-icon>
-          </button>
-        }
-
+    </form>
+    @for (author of authors(); track author.id) {
+      <form class="form-row">
+        <div class="form-fields-wrapper">
+          <mat-form-field>
+            <mat-label>Name:</mat-label>
+            <input [disabled]="editedAuthor() !== author.id" matInput type="text" [value]="author.name">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Country</mat-label>
+            <input [disabled]="editedAuthor() !== author.id" matInput type="text" [value]="author.country">
+          </mat-form-field>
+        </div>
+        <div class="form-buttons-wrapper">
+          @if (editedAuthor() === author.id) {
+            <button (click)="saveAuthor()" type="button" color="primary" mat-icon-button>
+              <mat-icon>save</mat-icon>
+            </button>
+          } @else {
+            <button (click)="editAuthor(author.id)" type="button" color="primary" mat-icon-button>
+              <mat-icon>edit</mat-icon>
+            </button>
+          }
+        </div>
       </form>
-      <div>{{ author.name }}: {{ author.country }}</div>
     }
   </mat-card-content>
 
