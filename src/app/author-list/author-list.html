@@ -22,26 +22,34 @@
       </div>
 
     </form>
-    @for (author of authors(); track author.id) {
+    @for (author of authors(); track author.id; ) {
       <form class="form-row">
         <div class="form-fields-wrapper">
           <mat-form-field>
             <mat-label>Name:</mat-label>
-            <input [disabled]="editedAuthor() !== author.id" matInput type="text" [value]="author.name">
+            <input [disabled]="editedAuthorData()?.id !== author.id" matInput type="text"
+                   [value]="author.name"
+                   (input)="inputChanges('name', $event.target)"
+            >
           </mat-form-field>
           <mat-form-field>
             <mat-label>Country</mat-label>
-            <input [disabled]="editedAuthor() !== author.id" matInput type="text" [value]="author.country">
+            <input [disabled]="editedAuthorData()?.id !== author.id" matInput type="text"
+                   (input)="inputChanges('country', $event.target)"
+                   [value]="author.country">
           </mat-form-field>
         </div>
         <div class="form-buttons-wrapper">
-          @if (editedAuthor() === author.id) {
+          @if (editedAuthorData()?.id === author.id) {
             <button (click)="saveAuthor()" type="button" color="primary" mat-icon-button>
               <mat-icon>save</mat-icon>
             </button>
           } @else {
-            <button (click)="editAuthor(author.id)" type="button" color="primary" mat-icon-button>
+            <button (click)="editAuthor(author)" type="button" color="primary" mat-icon-button>
               <mat-icon>edit</mat-icon>
+            </button>
+            <button (click)="deleteAuthor(author?.id)" type="button" color="primary" mat-icon-button>
+              <mat-icon>delete</mat-icon>
             </button>
           }
         </div>

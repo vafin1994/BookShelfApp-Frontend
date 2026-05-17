@@ -12,6 +12,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-author-list',
@@ -34,7 +35,7 @@ export class AuthorList implements OnInit {
   private authorService: AuthorService = inject(AuthorService);
 
   public authors = signal<Author[]>([]);
-  public editedAuthor = signal<number | null>(null);
+  public editedAuthorData = signal<Author | null>(null);
 
   public authorForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -46,9 +47,12 @@ export class AuthorList implements OnInit {
   }
 
   private getAuthorsList() {
-    this.authorService.getListOfAuthors().subscribe((response) => {
-      this.authors.set(response);
-    });
+    this.authorService
+      .getListOfAuthors()
+      .pipe(take(1))
+      .subscribe((response) => {
+        this.authors.set(response);
+      });
   }
 
   public addAuthor() {
@@ -62,19 +66,53 @@ export class AuthorList implements OnInit {
         this.authorForm.reset();
       },
       error: (err) => {
-        // TODO add error indicator
         console.log(err);
       },
     });
   }
 
-  public editAuthor(id: number | undefined) {
-    if (id) {
-      this.editedAuthor.set(id);
+  public editAuthor(author: Author) {
+    if (author.id) {
+      this.editedAuthorData.set(author);
+    }
+  }
+
+  public deleteAuthor(authorId: number | undefined) {
+    if (authorId) {
+      this.authorService.deleteAuthor(authorId).subscribe({
+        next: () => {
+          this.getAuthorsList();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
     }
   }
 
   public saveAuthor() {
-    this.editedAuthor.set(null);
+    const author: Author | null = this.editedAuthorData();
+    if (author && author.id) {
+      this.authorService.updateAuthor(author.id, author).subscribe({
+        next: (res) => {
+          this.authors.update((authors) => authors.map((a) => (a.id === res.id ? res : a)));
+          this.editedAuthorData.set(null);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }
+  }
+
+  public inputChanges(fieldName: string, eventTarget: EventTarget | null) {
+    if (eventTarget) {
+      const value = (eventTarget as HTMLInputElement).value;
+      const author: Author = {
+        ...this.editedAuthorData(),
+        [fieldName]: value,
+      } as Author;
+      this.editedAuthorData.set(author);
+    }
   }
 }
