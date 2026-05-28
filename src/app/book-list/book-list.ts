@@ -67,7 +67,7 @@ export class BookList implements OnInit {
 
   public openBookForm(book: Book | null = null) {
     const dialogRef: MatDialogRef<BookForm, BookFormResult> = this.dialog.open(BookForm, {
-      width: '500px',
+      width: '600px',
       data: book,
     });
     dialogRef

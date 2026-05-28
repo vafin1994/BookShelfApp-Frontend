@@ -6,55 +6,60 @@
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="form">
-      <mat-form-field appearance="outline">
-        <mat-label>Title</mat-label>
-        <input matInput formControlName="title"/>
-        @if (form.get('title')?.hasError('required') && form.get('title')?.touched) {
-          <mat-error>Title is required</mat-error>
-        }
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Author</mat-label>
-        <mat-select formControlName="authorId" placeholder="Select author">
-          @for (author of listOfAuthors(); track author.id) {
-            <mat-option [value]="author.id">
-              {{ author.name }}
-            </mat-option>
+      <div class="form-fields-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title"/>
+          @if (form.get('title')?.hasError('required') && form.get('title')?.touched) {
+            <mat-error>Title is required</mat-error>
           }
-        </mat-select>
-        @if (form.get('authorId')?.hasError('required') && form.get('authorId')?.touched) {
-          <mat-error>Author is required</mat-error>
-        }
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>ISBN</mat-label>
-        <input maxlength="13" matInput formControlName="isbn"/>
-        @if (form.get('isbn')?.invalid && form.get('isbn')?.touched) {
-          <mat-error>ISBN should be either 10 or 13 digits long</mat-error>
-        }
-      </mat-form-field>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Author</mat-label>
+          <mat-select formControlName="authorId" placeholder="Select author">
+            @for (author of listOfAuthors(); track author.id) {
+              <mat-option [value]="author.id">
+                {{ author.name }}
+              </mat-option>
+            }
+          </mat-select>
+          @if (form.get('authorId')?.hasError('required') && form.get('authorId')?.touched) {
+            <mat-error>Author is required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="form-fields-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>ISBN</mat-label>
+          <input maxlength="13" matInput formControlName="isbn"/>
+          @if (form.get('isbn')?.invalid && form.get('isbn')?.touched) {
+            <mat-error>ISBN should be either 10 or 13 digits long</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Publishing Year</mat-label>
+          <input min="1450" max="2100" matInput type="number" formControlName="publishingYear"/>
+          @if (form.get('publishingYear')?.invalid && form.get('publishingYear')?.touched) {
+            <mat-error>Publishing Year should be between 1450 year and 2100 year</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="form-fields-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>Genre</mat-label>
+          <input matInput formControlName="genre"/>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Publishing Year</mat-label>
-        <input min="1450" max="2100" matInput type="number" formControlName="publishingYear"/>
-        @if (form.get('publishingYear')?.invalid && form.get('publishingYear')?.touched) {
-          <mat-error>Publishing Year should be between 1450 year and 2100 year</mat-error>
-        }
-      </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Language</mat-label>
+          <input matInput maxlength="50" formControlName="language"/>
+        </mat-form-field>
+      </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Genre</mat-label>
-        <input matInput formControlName="genre"/>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Language</mat-label>
-        <input matInput maxlength="50" formControlName="language"/>
-      </mat-form-field>
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button (click)="dialogRef.close()">Cancel</button>
-    <button [disabled]="form.invalid" mat-button (click)="onSubmit()">{{ data ? 'Save Book' : 'Add Book' }}</button>
+    <button type="reset" mat-button (click)="dialogRef.close()">Cancel</button>
+    <button type="submit" [disabled]="form.invalid" mat-button (click)="onSubmit()">{{ data ? 'Save Book' : 'Add Book' }}</button>
   </mat-card-actions>
 </mat-card>

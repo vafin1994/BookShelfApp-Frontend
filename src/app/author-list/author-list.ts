@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { Author, AuthorRequest } from '../interfaces/author';
 import { AuthorService } from '../services/author';
-import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -27,6 +27,7 @@ import { take } from 'rxjs';
     MatIcon,
     MatIconButton,
     ReactiveFormsModule,
+    MatCardTitle,
   ],
   templateUrl: './author-list.html',
   styleUrl: './author-list.css',
